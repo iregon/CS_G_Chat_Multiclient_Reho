@@ -93,7 +93,7 @@ public class ServerChat extends JFrame {
 	}
 	
 	public void addBanButton(String textButton) {
-		JButton btn = new JButton(textButton);
+		JButton btn = new JButton("Ban " + textButton);
 		p_manageUsers.add(btn);
 	}
 	
