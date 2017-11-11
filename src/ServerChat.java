@@ -9,6 +9,8 @@ import java.util.*;
 
 public class ServerChat extends JFrame {
 	JTextArea ta;
+	private JPanel p_log, p_manageUsers;
+	private JTabbedPane tp_main;
 	String a,b;
 	
 	PrintWriter pw;
@@ -25,8 +27,23 @@ public class ServerChat extends JFrame {
     	d=d.substring(10,20);
     	ta.setText("Server aperto il "+a+" --"+d+"\n");
     	a=a.replace('/','_');
+    	
+    	
 		JScrollPane js=new JScrollPane(ta);
-		co.add(js);
+		
+		tp_main = new JTabbedPane();
+		
+		p_log = new JPanel();
+		p_log.add(js);
+		
+		p_manageUsers = new JPanel();
+		
+		tp_main.addTab("Log", p_log);
+		tp_main.addTab("Manage Users", p_manageUsers);
+		
+		co.add(tp_main);
+		
+		
  		DateFormat fmt2=DateFormat.getDateInstance(DateFormat.FULL,Locale.ITALY);
     	b =fmt2.format(new Date());
  		String s1="log"+a+".dat";
@@ -59,6 +76,7 @@ public class ServerChat extends JFrame {
 				s=ss.accept();
 				setArea("Connessione avvenuta il: "+b+ " da "+s+"\n");
 				new ServerThread(s,pw,Utenti,Stanze,Messaggi,ta);
+				addBanButton(s.getRemoteSocketAddress().toString());
 			}
 		}catch(Exception e){ setArea("Errore "+e);
 			
@@ -72,6 +90,11 @@ public class ServerChat extends JFrame {
 	public void setArea(String s){
 		ta.append(s+"\n");
 		
+	}
+	
+	public void addBanButton(String textButton) {
+		JButton btn = new JButton(textButton);
+		p_manageUsers.add(btn);
 	}
 	
 	public static void main(String[] args)throws IOException{
