@@ -11,6 +11,7 @@ public class ServerChat extends JFrame implements ActionListener{
 	JTextArea ta;
 	private JPanel p_log, p_manageUsers;
 	private JTabbedPane tp_main;
+	private ArrayList<JButton> banButtons = new ArrayList<JButton>();
 	String a,b;
 	
 	PrintWriter pw;
@@ -94,13 +95,37 @@ public class ServerChat extends JFrame implements ActionListener{
 	
 	public void addBanButton(String textButton) {
 		JButton btn = new JButton("Ban " + textButton);
-		p_manageUsers.add(btn);
+		btn.addActionListener(this);
+		banButtons.add(btn);
+//		p_manageUsers.add(btn);
+		refreshBanButtons();
+	}
+	
+	public void removeBanButton(JButton btn) {
+		banButtons.remove(btn);
+		
+		refreshBanButtons();
+	}
+	
+	public void refreshBanButtons() {
+		p_manageUsers.removeAll();
+		
+		for (JButton btn : banButtons) {
+			p_manageUsers.add(btn);
+		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		JButton btn = (JButton)e.getSource();
+//		System.out.println(btn.getText());
+		for (JButton b : banButtons) {
+			if(b.getText().equals(btn.getText())) {
+				removeBanButton(b);
+				
+				break;
+			}
+		}
 	}
 	
 	public static void main(String[] args)throws IOException{
