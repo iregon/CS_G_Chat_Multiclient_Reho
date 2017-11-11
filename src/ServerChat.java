@@ -7,7 +7,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class ServerChat extends JFrame {
+public class ServerChat extends JFrame implements ActionListener{
 	JTextArea ta;
 	private JPanel p_log, p_manageUsers;
 	private JTabbedPane tp_main;
@@ -97,13 +97,19 @@ public class ServerChat extends JFrame {
 		p_manageUsers.add(btn);
 	}
 	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public static void main(String[] args)throws IOException{
 		ServerChat mm=new ServerChat();
  		mm.setVisible(true);
  		mm.pack();
  	    mm.execute();
 	}
-	}
+}
 	
 	
 class ServerThread extends Thread{
